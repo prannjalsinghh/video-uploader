@@ -1,0 +1,60 @@
+video{
+    min-height: calc(100vh - 3px);
+    object-fit: cover;
+    max-width: 100%;
+    z-index: 0;
+    
+}
+
+.container{
+    margin-top: -100px;
+    position: absolute;
+    text-align: center;
+    width:100%;
+    height: 100%;
+}
+.button{
+    border-radius: 50%;
+    background-color:rgb(6, 6, 113) ;
+    width:50px;
+}
+.buttonWhite{
+    border-radius: 50%;
+    background-color:white ;
+    width:50px;
+    color: black;
+}
+.controls{
+    font-size: small;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap:2rem;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    background-color: white;
+    height:100px;
+    position: absolute;
+    z-index:100;
+    border-radius: 10px 10px 0 0;
+    margin-top: -10px;
+}
+.postControls{
+    height:250px;
+    font-size: small;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: medium;
+    width: 97.5%;
+    background-color: white;
+    position: absolute;
+    z-index:100;
+    border-radius: 10px 10px 0 0;
+    margin-top: -170px;
+    padding-left: 10px;
+    
+}

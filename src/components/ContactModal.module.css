@@ -1,0 +1,12 @@
+.head{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.main{
+  z-index:100;
+  position: absolute;
+  background-color: white;
+  height: 100vh;
+}

@@ -1,0 +1,24 @@
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+    
+    background: rgba(63, 63, 63, 0.75);
+  }
+  .modal{
+    height: 320px;
+    z-index: 1000;
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
+    border-radius: 10px 10px 0px 0px ;
+  }
+
+
