@@ -1,4 +1,5 @@
 import Navigator from "./Navigator";
+import axios from 'axios'
 import styles from "./VideoRecorder.module.css";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -22,6 +23,7 @@ const VideoRecorder = () => {
   const [finalUrl, setFinalUrl] = useState("");
   const [cameraMode, setCameraMode] = useState("user");
   const [submitted,setSubmitted]=useState(false);
+  const [newBlob, setNewBlob]  = useState('');
 
 
   useEffect(() => {
@@ -89,8 +91,16 @@ const VideoRecorder = () => {
       const blob = new Blob(recordedChunks, {
         type: "video/webm",
       });
-      const url = URL.createObjectURL(blob);
 
+      const myFile = new File(
+        [blob],
+        "demo.webm",
+        { type: 'video/webm' }
+        
+    );
+
+      const url = URL.createObjectURL(blob);
+      setNewBlob(myFile);
       setFinalUrl(url);
     }
   };
@@ -98,8 +108,49 @@ const VideoRecorder = () => {
     recordingHandler("def");
   };
 
-  const submitHandler = ()=>{
-    setSubmitted(true);
+  const submitHandler = async ()=>{
+      setSubmitted(true);
+      // get secure url from our server
+      const { url } = await fetch("https://respects-task.herokuapp.com/s3Url").then(res => res.json())
+
+      // post the image direclty to the s3 bucket
+      await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Access-Control-Allow-Origin":"*",
+          "Access-Control-Request-Headers":"*",
+          "Content-Type": "video/webm"
+        },
+        body: newBlob
+      })
+
+      const imageUrl = url.split('?')[0]
+
+   // post requst to my server
+      postData(imageUrl);
+
+  }
+
+  const postData = (url)=>{
+
+    const obj={
+      
+      number: location.state.id,
+      respects:{
+        postedBy:"+91-1234567890",
+        cameraUsed:cameraMode,
+        selectedRank:location.state.selectedRank,
+        url:url
+      }
+    }
+    
+      axios.post('https://respects-task.herokuapp.com/updateRespects',obj).then(()=>{
+        showProfile(location.state.id);
+      })
+  }
+  
+  const showProfile =(id)=>{
+    navigate('/profile',{state:{id:id}})
   }
 
   const backHandler = () => {
